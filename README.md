@@ -3,6 +3,13 @@
 ## :rocket:什么是前端工程化？
 前端工程化是一个很大的范围，将开发阶段代码发布到生产环境，可以分为五个部分：开发、构建、部署、性能、规范化  
 
+## :art:工程化内容
+![开发](https://github.com/quirkybird/engineering-tools/assets/115051391/3f438ad9-5870-458a-80a8-34a9c0f9b2a5)
+![构建](https://github.com/quirkybird/engineering-tools/assets/115051391/25c877b8-2f77-477e-a65e-c0cea5b0f022)
+![部署](https://github.com/quirkybird/engineering-tools/assets/115051391/4eb2b0dd-5953-461e-ae97-b382e4052b41)
+![性能](https://github.com/quirkybird/engineering-tools/assets/115051391/c95bb609-20b8-4fe9-9496-f6d0b1e4c011)
+![规范化](https://github.com/quirkybird/engineering-tools/assets/115051391/26a525e2-9843-4984-af25-385d12cc5f4e)
+
 ## :sparkles:具体涉及到的相关技术和概念
 - 模块化（Modularity）：将复杂的前端代码拆分为独立的模块，以便更好地组织、管理和重用代码（npm包管理工具）。
 - 打包（Bundling）：将多个模块的代码合并到一个或多个文件中，以减少请求次数，并提升加载性能。
