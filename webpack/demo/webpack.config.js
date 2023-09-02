@@ -1,5 +1,6 @@
 // webpack.config.js是在node环境下被webpack加载的，需要用module.exports
-const path = require('path')
+const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: "production", //设置打包的模式，"production" 或者 "development"
 
@@ -12,6 +13,32 @@ module.exports = {
   // 输出
   output: {
     path: path.resolve(__dirname, "dist"), //输出地址
-    filename: "[name]-[id]-[hash]bundle.js" //输出文件名 可以用[]做很多输出文件名配置
-  }
-}
+    filename: "[name]-[id]-[hash]bundle.js", //输出文件名 可以用[]做很多输出文件名配置
+  },
+
+  // webpack本身只能理解JavaScript文件和JSON文件，使用loader识别更多类型文件
+  // 需要注意的是，使用这些loader之前，先安装对应的依赖包
+  module: {
+    rules: [
+      { test: /\.css$/, use: ["style-loader", "css-loader"] },
+      // 当需要加载的文件是一些静态资源时，不使用use，使用type
+      { test: /\.jpg|svg|png$/, type: "asset/resource" },
+
+      // babel 解决兼容性问题，本身也是一个loader
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
+    ],
+  },
+
+  // 插件
+  // 生成一个html文件的插件
+  plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })],
+};
