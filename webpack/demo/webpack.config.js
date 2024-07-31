@@ -1,8 +1,9 @@
 // webpack.config.js是在node环境下被webpack加载的，需要用module.exports
 const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
-  mode: "production", //设置打包的模式，"production" 或者 "development"
+  mode: "development", //设置打包的模式，"production" 或者 "development"
 
   // 入口文件中
   entry: "./src/index.js", //默认为./src/index.js
@@ -20,7 +21,8 @@ module.exports = {
   // 需要注意的是，使用这些loader之前，先安装对应的依赖包
   module: {
     rules: [
-      { test: /\.css$/, use: ["style-loader", "css-loader"] },
+      // 特别注意：loader执行顺序是从后向前的(不一定)
+      { test: /\.css$/, use: ["style-loader", "css-loader", "custom-loader"] },
       // 当需要加载的文件是一些静态资源时，不使用use，使用type
       { test: /\.jpg|svg|png$/, type: "asset/resource" },
 
@@ -40,5 +42,15 @@ module.exports = {
 
   // 插件
   // 生成一个html文件的插件
-  plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })],
+  plugins: [
+    new HtmlWebpackPlugin({ template: "./src/index.html" }),
+    new CleanWebpackPlugin(),
+  ],
+
+  // `custom-loader`
+  resolveLoader: {
+    alias: {
+      "custom-loader": path.resolve(__dirname, "./custom-loader/index.js"),
+    },
+  },
 };
