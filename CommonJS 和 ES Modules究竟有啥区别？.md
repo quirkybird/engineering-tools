@@ -7,13 +7,14 @@
 促使了模块化诞生的必然性，毕竟js不再是配角，甚至现在有node这样服务端的运行时，js成为了真正的主角，各种框架百花齐放，前端也不再是「鸡在键盘上啄几下都能搞定的岗位了」。<br />模块化解决了什么问题：
 
 - **代码组织** 允许将代码分割成小的、可重用的组件，每个模块负责一个特定的功能。这有助于提高代码的可读性和维护性。
-- **依赖管理 **使得依赖关系更加明确。每个模块可以声明它需要的依赖项，并且这些依赖项可以被自动管理和加载，避免了全局变量的污染和依赖混乱。
+- **依赖管理** 使得依赖关系更加明确。每个模块可以声明它需要的依赖项，并且这些依赖项可以被自动管理和加载，避免了全局变量的污染和依赖混乱。
 - **命名冲突** 通过作用域隔离减少了命名冲突的问题。每个模块的变量和函数都被封装在其自己的作用域中，避免了与其他模块中的同名变量或函数发生冲突。
 - **代码重用** 促进了代码的重用。通过将通用功能封装成模块，可以在多个项目中复用这些模块，从而减少重复代码和开发时间。
 - **测试** 使得测试变得更加容易。每个模块可以被独立地测试和验证，这有助于确保每个部分的功能正常，而不会影响到其他模块。
-- **懒加载 **通过模块化，应用可以实现按需加载（lazy loading）模块，从而减少初始加载时间和提高应用的性能。模块只有在真正需要时才会被加载和执行。
+- **懒加载** 通过模块化，应用可以实现按需加载（lazy loading）模块，从而减少初始加载时间和提高应用的性能。模块只有在真正需要时才会被加载和执行。
 
-接下来，CommonJS登场。<br />它的出现是JS服务端需要一种模块化标准，来让不同模块存在于不同的命名空间——[What Server Side JavaScript needs](https://www.blueskyonmars.com/2009/01/29/what-server-side-javascript-needs/)，CommonJS小组成立，开发Node，这个时候还没有什么前端框架，一切都刚刚开始。<br />同时，当时CommonJS是存在一些核心问题的：
+接下来，CommonJS登场。<br />它的出现是JS服务端需要一种模块化标准，来让不同模块存在于不同的命名空间——[What Server Side JavaScript needs](https://www.blueskyonmars.com/2009/01/29/what-server-side-javascript-needs/)，CommonJS小组成立，开发Node，这个时候还没有什么前端框架，一切都刚刚开始。
+同时，当时CommonJS是存在一些核心问题的：
 > - 模块化加载是同步的
 > - 难以进行tree-shaking
 > - 不是浏览器原生的 意味着需要进行更多的构建步骤
@@ -53,7 +54,9 @@ require(['myModule'], function(myModule) {
 }));
 
 ```
-在我看起来他们太晦涩了，而且有点冗余，作为2020年后才学习web开发的学习者，我甚至没见到过他们的身影，所以也不想过多讨论它们，其实也有npm相关模块化方式的统计：<br /><blockquote class="twitter-tweet"><p lang="en" dir="ltr">The latest about ESM on npm: ESM is now at 9%, dual at 3.8, faux ESM at 13.7%, and CJS at 73.6%.<br><br>This data includes only the most popular npm packages (1m+ downloads per week and/or 500+ others depend on it), excluding the TypeScript `types/*` packages. <a href="https://t.co/kdZg5tM9N6">pic.twitter.com/kdZg5tM9N6</a></p>&mdash; Titus 🇵🇸 (@wooorm) <a href="https://twitter.com/wooorm/status/1588905279206621184?ref_src=twsrc%5Etfw">November 5, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br />回到正题，讨论下相对古老的CommonJS和新兴实力派ES Modules，顺便提一句，以后像是直接都支持ES Modules直接运行，无需打包构建就太好了（嗯……，Vite开发模式不就是如此吗？）
+在我看起来他们太晦涩了，而且有点冗余，作为2020年后才学习web开发的学习者，我甚至没见到过他们的身影，所以也不想过多讨论它们，其实也有npm相关模块化方式的统计：<br /><blockquote class="twitter-tweet"><p lang="en" dir="ltr">The latest about ESM on npm: ESM is now at 9%, dual at 3.8, faux ESM at 13.7%, and CJS at 73.6%.<br><br>This data includes only the most popular npm packages (1m+ downloads per week and/or 500+ others depend on it), excluding the TypeScript `types/*` packages. <a href="https://t.co/kdZg5tM9N6">pic.twitter.com/kdZg5tM9N6</a></p>&mdash; Titus 🇵🇸 (@wooorm) <a href="https://twitter.com/wooorm/status/1588905279206621184?ref_src=twsrc%5Etfw">November 5, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+回到正题，讨论下相对古老的CommonJS和新兴实力派ES Modules，顺便提一句，以后像是直接都支持ES Modules直接运行，无需打包构建就太好了（嗯……，Vite开发模式不就是如此吗？）
 ### Common JS
 模块导出和导入：
 
@@ -155,6 +158,7 @@ myModule.greet(); // 输出: Hello, Alice
 | --- | --- | --- |
 | **加载方式** | 同步加载 | 异步加载 |
 | **静态分析** | 不支持静态分析 | 支持静态分析 |
+| **导入方式** | 拷贝导入 | 引用导入 |
 
 特别说明：ES2020已支持通过[import()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)动态执行代码，他和import静态导入不是一回事，即使不在type="module"对浏览器环境中仍然可以使用。
 ### ES Modules构建过程
@@ -261,8 +265,8 @@ export { foo, bar } from './utils';
 
 写完这篇后，我发现一个很系统全面写javascript模块化历史的文章[《编程时间简史系列》JavaScript 模块化的历史进程](https://segmentfault.com/a/1190000023017398)<br />PS. 文章部分内容由AI生成
 
-> [https://segmentfault.com/q/1010000044201309](https://segmentfault.com/q/1010000044201309). 
-> [https://bun.sh/blog/commonjs-is-not-going-away](https://bun.sh/blog/commonjs-is-not-going-away). 
-> [https://deno.com/blog/commonjs-is-hurting-javascript](https://deno.com/blog/commonjs-is-hurting-javascript). 
+> [https://segmentfault.com/q/1010000044201309](https://segmentfault.com/q/1010000044201309).  
+> [https://bun.sh/blog/commonjs-is-not-going-away](https://bun.sh/blog/commonjs-is-not-going-away).   
+> [https://deno.com/blog/commonjs-is-hurting-javascript](https://deno.com/blog/commonjs-is-hurting-javascript).   
 
 
